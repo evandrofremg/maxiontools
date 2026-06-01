@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maxion Tools</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+        body { background-color: #f1f5f9; color: #1e293b; padding-bottom: 30px; }
+        header { background-color: #0f172a; color: white; padding: 20px; border-bottom: 4px solid #2563eb; text-align: center; }
+        header h1 { font-size: 22px; font-weight: 900; color: #3b82f6; }
+        header p { font-size: 11px; color: #94a3b8; text-transform: uppercase; margin-top: 4px; }
+        .container { max-width: 500px; margin: 20px auto; padding: 0 15px; }
+        
+        /* Menu de Navegação por Links */
+        .tab-container { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
+        .btn-tab { padding: 12px 6px; border-radius: 8px; border: 2px solid #cbd5e1; background: white; font-weight: bold; font-size: 12px; text-decoration: none; color: #334155; text-align: center; display: block; }
+        .btn-tab:active, .btn-tab:focus { background-color: #1e3a8a; color: white; border-color: #3b82f6; }
+        
+        .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); margin-bottom: 20px; border: 1px solid #e2e8f0; }
+        .card-title { font-size: 12px; font-weight: bold; color: #64748b; text-transform: uppercase; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 15px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 11px; font-weight: bold; text-transform: uppercase; color: #475569; margin-bottom: 6px; }
+        .form-control { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; background-color: #f8fafc; color: #334155; }
+        
+        /* Exibição padrão da primeira tela (Corte) */
+        #secao-corte { display: block; }
+        #secao-dobrav, #secao-dobrau, #secao-rosca { display: none; }
+        
+        /* Lógica mecânica de troca de abas via CSS puro (Altera o comportamento das seções) */
+        #aba-corte:target ~ .card #secao-corte { display: block !important; }
+        #aba-corte:target ~ .card #secao-dobrav { display: none !important; }
+        #aba-corte:target ~ .card #secao-dobrau { display: none !important; }
+        #aba-corte:target ~ .card #secao-rosca { display: none !important; }
+
+        #aba-dobrav:target ~ .card #secao-corte { display: none !important; }
+        #aba-dobrav:target ~ .card #secao-dobrav { display: block !important; }
+        #aba-dobrav:target ~ .card #secao-dobrau { display: none !important; }
+        #aba-dobrav:target ~ .card #secao-rosca { display: none !important; }
+
+        #aba-dobrau:target ~ .card #secao-corte { display: none !important; }
+        #aba-dobrau:target ~ .card #secao-dobrav { display: none !important; }
+        #aba-dobrau:target ~ .card #secao-dobrau { display: block !important; }
+        #aba-dobrau:target ~ .card #secao-rosca { display: none !important; }
+
+        #aba-rosca:target ~ .card #secao-corte { display: none !important; }
+        #aba-rosca:target ~ .card #secao-dobrav { display: none !important; }
+        #aba-rosca:target ~ .card #secao-dobrau { display: none !important; }
+        #aba-rosca:target ~ .card #secao-rosca { display: block !important; }
+
+        .btn-primary { width: 100%; background-color: #2563eb; color: white; border: none; padding: 14px; border-radius: 8px; font-weight: bold; font-size: 14px; text-transform: uppercase; cursor: pointer; margin-top: 10px; text-align: center; text-decoration: none; display: block; }
+        .btn-secondary { width: 100%; background-color: #64748b; color: white; border: none; padding: 10px; border-radius: 8px; font-weight: bold; font-size: 12px; text-transform: uppercase; cursor: pointer; margin-top: 10px; text-align: center; text-decoration: none; display: block; }
+        .btn-success { width: 100%; background-color: #10b981; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 13px; text-transform: uppercase; cursor: pointer; margin-top: 15px; text-align: center; text-decoration: none; display: block; }
+        
+        .bg-result { background-color: #0f172a; color: white; padding: 20px; border-radius: 15px; }
+        .res-linha { font-size: 14px; margin-bottom: 10px; padding: 10px; background: #1e293b; border-radius: 6px; border-left: 4px solid #3b82f6; }
+        .res-destaque { font-size: 20px; font-weight: bold; color: #34d399; margin-top: 15px; text-align: center; background: #1e3a8a; padding: 15px; border-radius: 8px; }
+        
+        @media print {
+            body { background: white; color: black; padding: 0; }
+            header, .tab-container, .card:not(.bg-result), .btn-primary, .btn-secondary, .btn-success { display: none !important; }
+            .container { max-width: 100%; width: 100%; padding: 0; margin: 0; }
+            .bg-result { background: white !important; color: black !important; padding: 0 !important; }
+            .res-linha { background: #f8fafc !important; border: 1px solid #cbd5e1 !important; border-left: 5px solid #1e3a8a !important; color: black !important; margin-bottom: 12px; font-size: 13px; }
+            .res-destaque { color: #16a34a !important; background: #f0fdf4 !important; border: 2px solid #bbf7d0 !important; font-size: 24px; padding: 20px; }
+            .print-header { display: block !important; border-bottom: 3px solid #1e3a8a; padding-bottom: 12px; margin-bottom: 25px; }
+            .print-footer { display: block !important; margin-top: 60px; border-top: 1px solid #cbd5e1; padding-top: 10px; text-align: center; font-size: 10px; color: #64748b; }
+            .signature-area { display: flex !important; justify-content: space-between; margin-top: 80px; }
+            .sig-line { width: 45%; border-top: 1px solid #000; text-align: center; padding-top: 6px; font-size: 12px; color: #334155; }
+        }
+        .print-header, .print-footer, .signature-area { display: none; }
+    </style>
+</head>
+<body>
+
+    <!-- Âncoras mecânicas ocultas -->
+    <div id="aba-corte"></div>
+    <div id="aba-dobrav"></div>
+    <div id="aba-dobrau"></div>
+    <div id="aba-rosca"></div>
+
+    <header>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 2px;">
+            <span style="font-size: 24px; font-weight: 900; letter-spacing: 1.5px; color: #ffffff;">MAXION</span>
+            <span style="font-size: 24px; font-weight: 900; letter-spacing: 1.5px; color: #2563eb;">TOOLS</span>
+        </div>
+        <p>Engenharia de Processos & Estamparia</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- Abas por links -->
+        <div class="tab-container">
+            <a href="#aba-corte" class="btn-tab">✂️ Corte</a>
+            <a href="#aba-dobrav" class="btn-tab">📐 Dobra V</a>
+            <a href="#aba-dobrau" class="btn-tab">🔄 Dobra U</a>
+            <a href="#aba-rosca" class="btn-tab">🔩 Furo Rosca</a>
+        </div>
+
+        <!-- Formulários de Entrada -->
+        <div class="card">
+            <div class="card-title">Parâmetros de Engenharia</div>
+            
+            <!-- Seção Corte -->
+            <div id="secao-corte">
+                <div class="form-group"><label>Material da Chapa</label><input type="text" class="form-control" value="Aço SAE 1020 (Padrão)" readonly></div>
+                <div class="form-group"><label>Espessura (s) [mm]</label><input type="number" id="c-s" class="form-control" value="2.0"></div>
+                <div class="form-group"><label>Perímetro Linear do Corte [mm]</label><input type="number" id="c-p" class="form-control" value="80"></div>
+            </div>
+
+            <!-- Seção Dobra V -->
+            <div id="secao-dobrav">
+                <div class="form-group"><label>Material da Chapa</label><input type="text" class="form-control" value="Aço SAE 1020 (Padrão)" readonly></div>
+                <div class="form-group"><label>Espessura (s) [mm]</label><input type="number" id="dv-s" class="form-control" value="2.0"></div>
+                <div class="form-group"><label>Comprimento da Linha (b) [mm]</label><input type="number" id="dv-b" class="form-control" value="100"></div>
+                <div class="form-group"><label>Canal V da Matriz (W) [mm]</label><input type="number" id="dv-w" class="form-control" value="16"></div>
+            </div>
+
+            <!-- Seção Dobra U -->
+            <div id="secao-dobrau">
+                <div class="form-group"><label>Material da Chapa</label><input type="text" class="form-control" value="Aço SAE 1020 (Padrão)" readonly></div>
+                <div class="form-group"><label>Espessura (s) [mm]</label><input type="number" id="du-s" class="form-control" value="2.0"></div>
+                <div class="form-group"><label>Comprimento da Linha (b) [mm]</label><input type="number" id="du-b" class="form-control" value="100"></div>
+                <div class="form-group"><label>Canal U da Matriz (W) [mm]</label><input type="number" id="du-w" class="form-control" value="20"></div>
+            </div>
+
+            <!-- Seção Rosca -->
+            <div id="secao-rosca">
+                <div class="form-group">
+                    <label>Selecione a Rosca Desejada (Métrica)</label>
+                    <select id="r-sel" class="form-control">
+                        <option value="2.5">M3 (Ø Pré-furo: 2.5 mm)</option>
+                        <option value="3.3">M4 (Ø Pré-furo: 3.3 mm)</option>
+                        <option value="4.2">M5 (Ø Pré-furo: 4.2 mm)</option>
+                        <option value="5.0">M6 (Ø Pré-furo: 5.0 mm)</option>
+                        <option value="6.8" selected>M8 (Ø Pré-furo: 6.8 mm)</option>
+                        <option value="8.5">M10 (Ø Pré-furo: 8.5 mm)</option>
