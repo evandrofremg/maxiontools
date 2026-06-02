@@ -21,7 +21,7 @@
         .container { max-width: 500px; margin: 20px auto; padding: 0 15px; }
         
         .tab-container { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
-        .btn-tab { padding: 12px 6px; border-radius: 8px; border: 2px solid #cbd5e1; background: white; font-weight: bold; font-size: 12px; cursor: pointer; text-align: center; color: #334155; }
+        .btn-tab { padding: 12px 6px; border-radius: 8px; border: 2px solid #cbd5e1; background: white; font-weight: bold; font-size: 12px; cursor: pointer; text-align: center; color: #334155; -webkit-tap-highlight-color: transparent; }
         .btn-tab.active { background-color: #1e3a8a !important; color: white !important; border-color: #3b82f6 !important; }
         
         .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); margin-bottom: 20px; border: 1px solid #e2e8f0; }
@@ -66,15 +66,13 @@
 
     <div class="container">
         
-        <!-- Abas Técnicas -->
         <div class="tab-container">
-            <button type="button" id="tab-corte" class="btn-tab active" onclick="mudarAba('corte')">✂️ Corte</button>
-            <button type="button" id="tab-dobra" class="btn-tab" onclick="mudarAba('dobra')">📐 Dobra V</button>
-            <button type="button" id="tab-dobrau" class="btn-tab" onclick="mudarAba('dobrau')">🔄 Dobra U</button>
-            <button type="button" id="tab-rosca" class="btn-tab" onclick="mudarAba('rosca')">🔩 Furo Rosca</button>
+            <button type="button" id="tab-corte" class="btn-tab active">✂️ Corte</button>
+            <button type="button" id="tab-dobra" class="btn-tab">📐 Dobra V</button>
+            <button type="button" id="tab-dobrau" class="btn-tab">🔄 Dobra U</button>
+            <button type="button" id="tab-rosca" class="btn-tab">🔩 Furo Rosca</button>
         </div>
 
-        <!-- Inputs Dinâmicos -->
         <div class="card">
             <div class="card-title">Parâmetros de Entrada</div>
             
@@ -98,7 +96,6 @@
                 </div>
             </div>
 
-            <!-- Grupo: Corte -->
             <div id="grupo-corte">
                 <div class="form-group">
                     <label>Perímetro Total do Corte [mm]</label>
@@ -106,7 +103,6 @@
                 </div>
             </div>
 
-            <!-- Grupo: Dobra V -->
             <div id="grupo-dobra" class="hidden">
                 <div class="form-group">
                     <label>Comprimento da Dobra (b) [mm]</label>
@@ -118,7 +114,6 @@
                 </div>
             </div>
 
-            <!-- Grupo: Dobra U -->
             <div id="grupo-dobrau" class="hidden">
                 <div class="form-group">
                     <label>Comprimento da Dobra U (b) [mm]</label>
@@ -130,7 +125,6 @@
                 </div>
             </div>
 
-            <!-- Grupo: Rosca -->
             <div id="grupo-rosca" class="hidden">
                 <div class="form-group">
                     <label>Selecione a Rosca Desejada (Métrica)</label>
@@ -146,3 +140,9 @@
                         <option value="14.0">M16 x 2.0 (Passo Normal)</option>
                         <option value="15.5">M18 x 2.5 (Passo Normal)</option>
                         <option value="17.5">M20 x 2.5 (Passo Normal)</option>
+                        <option value="21.0">M24 x 3.0 (Passo Normal)</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="button" id="btn-calcular" class="btn-primary">⚡ Calcular Esforços</button>
